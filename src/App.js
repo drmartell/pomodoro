@@ -58,11 +58,11 @@ class App extends Component {
   }
 
   showProductivity = () => {
-    this.state.prodVisible = true;
+    this.setState({ prodVisible: true });
   }
 
   hideProductivity = () => {
-    this.state.prodVisible = false;
+    this.setState({ prodVisible: false });
   }
 
   render () {
