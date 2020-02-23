@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { formatTime, minutesToMs } from './format.js'
+import React, { Component } from 'react';
+import { formatTime, minutesToMs } from './format.js';
 
 class Timer extends Component {
   constructor () {
@@ -7,19 +7,24 @@ class Timer extends Component {
     this.state = {
       sessionFlag: true
     }
-    this.timer = 0
+    this.timer = 0;
   }
 
   tickTock = () => {
-    let time = this.props.app.time
+    let time = this.props.app.time;
 
     if (time === 0) {
       if (this.state.sessionFlag) {
-        this.alarm(this.chill)
-        this.props.updateTime(minutesToMs(this.props.app.break) + 1000)
+        // i.e. the end of the work session
+        //this.alarm(this.chill)
+        this.props.updateTime(minutesToMs(this.props.app.break) + 1000);
+        this.props.showProductivity();
       } else {
-        this.alarm(this.focus)
-        this.props.updateTime(minutesToMs(this.props.app.session) + 1000)
+        // i.e. the end of the break session
+        // this.alarm(this.focus)
+        this.props.updateTime(minutesToMs(this.props.app.session) + 1000);
+        this.props.hideProductivity();
+
       }
       this.setState({
         sessionFlag: !this.state.sessionFlag
@@ -27,22 +32,22 @@ class Timer extends Component {
     }
 
     time = this.props.app.time - 1000
-    this.props.updateTime(time)
+    this.props.updateTime(time);
   }
 
   alarm = beep => {
-    beep.play()
+    beep.play();
   }
 
   pauseAlarm = beep => {
-    beep.pause()
-    beep.currentTime = 0
+    beep.pause();
+    beep.currentTime = 0;
   }
 
   startTimer = () => {
     if (!this.props.app.running) {
-      this.props.setRunning(true)
-      this.timer = setInterval(this.tickTock, 1000)
+      this.props.setRunning(true);
+      this.timer = setInterval(this.tickTock, 1000);
     }
   }
 
@@ -60,18 +65,18 @@ class Timer extends Component {
   resetTimer = () => {
     clearInterval(this.timer)
     this.setState({ sessionFlag: true })
-    this.pauseAlarm(this.chill)
-    this.pauseAlarm(this.focus)
+    //this.pauseAlarm(this.chill)
+    //this.pauseAlarm(this.focus)
     this.props.reset()
   }
 
   render () {
-    const timeFormat = formatTime(this.props.app.time)
-    const minutes = ('0' + timeFormat.m).slice(-2)
-    const seconds = ('0' + timeFormat.s).slice(-2)
-    const focus = this.props.app.running && this.state.sessionFlag
-    const chill = this.props.app.running && !this.state.sessionFlag
-    const paused = !this.props.app.running && this.props.app.paused
+    const timeFormat = formatTime(this.props.app.time);
+    const minutes = ('0' + timeFormat.m).slice(-2);
+    const seconds = ('0' + timeFormat.s).slice(-2);
+    const focus = this.props.app.running && this.state.sessionFlag;
+    const chill = this.props.app.running && !this.state.sessionFlag;
+    const paused = !this.props.app.running && this.props.app.paused;
 
     return (
       <div className='timer'>
@@ -121,4 +126,4 @@ class Timer extends Component {
   }
 }
 
-export default Timer
+export default Timer;

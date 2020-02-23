@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 
 class SetTimer extends Component {
   increment = () => {
-    let t = this.props.time
+    let t = this.props.time;
     if (this.props.time >= 1 && this.props.time < 60) {
-      t = t + 1
+      t = t + 1;
     }
-    this.props.setTime(t)
+    this.props.setTime(t);
   }
 
   decrement = () => {
     let t = this.props.time
     if (this.props.time > 1 && this.props.time <= 60) {
-      t = t - 1
+      t = t - 1;
     }
-    this.props.setTime(t)
+    this.props.setTime(t);
   }
 
   render () {
@@ -29,4 +29,4 @@ class SetTimer extends Component {
   }
 }
 
-export default SetTimer
+export default SetTimer;

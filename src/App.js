@@ -4,6 +4,7 @@ import './App.css'
 import Timer from './Timer.js'
 import SetTimer from './SetTimer.js'
 import { minutesToMs } from './format.js'
+import Productivity from './Productivity';
 
 class App extends Component {
   constructor (props) {
@@ -13,7 +14,8 @@ class App extends Component {
       break: 5,
       running: false,
       paused: false,
-      time: minutesToMs(25)
+      time: minutesToMs(25),
+      prodVisible: false,
     }
   }
 
@@ -55,6 +57,14 @@ class App extends Component {
     })
   }
 
+  showProductivity = () => {
+    this.state.prodVisible = true;
+  }
+
+  hideProductivity = () => {
+    this.state.prodVisible = false;
+  }
+
   render () {
     return (
       <div className='App'>
@@ -65,7 +75,13 @@ class App extends Component {
           setRunning={this.setRunning}
           reset={this.reset}
           updateTime={this.updateTime}
+          showProductivity={this.showProductivity}
+          hideProductivity={this.hideProductivity}
         />
+        {this.state.prodVisible &&
+        <Productivity
+          hideProductivity={this.hideProductivity}
+        />}
         <div className='settings'>
           <SetTimer
             time={this.state.session}
